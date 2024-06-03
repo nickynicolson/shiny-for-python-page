@@ -21,7 +21,7 @@ def server(input, output, session):
     @render.plot
     def histogram():
         x = 100 + np.random.randn(500)
-        plt.title("A histogram", size=20)
+        plt.title("Histogram", size=20)
         plt.hist(x=x, bins=input.slider(), color="grey", ec="black")
 
 
