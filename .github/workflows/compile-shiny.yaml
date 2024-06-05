@@ -1,9 +1,10 @@
 name: Compile Shiny app to static site under docs/
 on:
-  push
+  # push
+  workflow_dispatch:
   
 jobs:
-  build:
+  compile:
 
     runs-on: ubuntu-latest
 
@@ -26,3 +27,37 @@ jobs:
           git add docs/*
           git commit -am "shinylive compilation"
           git push    
+
+
+  # Build job
+  build:
+    needs: compile
+    runs-on: ubuntu-latest
+    steps:
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload docs subdir
+          path: 'docs'
+
+  # Deploy job
+  deploy:
+    # Add a dependency to the build job
+    needs: build
+
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+
+    # Deploy to the github-pages environment
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    # Specify runner + deployment step
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4 # or specific "vX.X.X" version tag for this action
