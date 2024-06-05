@@ -26,6 +26,9 @@ def server(input, output, session):
         data = await response.json()        
         title = data['title']
         x = 100 + np.random.randn(500)
-        plt.title(title, size=20)
-        plt.hist(x=x, bins=input.slider(), color="grey", ec="black")
+        fig, ax = plt.subplots()
+        ax.hist(x=x, bins=input.slider(), color="grey", ec="black")
+        ax.set_title(title)
+        return fig
+
 app = App(ui=app_ui, server=server)
