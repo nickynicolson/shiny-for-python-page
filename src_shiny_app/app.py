@@ -16,15 +16,15 @@ app_ui = ui.page_fluid(
     )
 )
 
-def server(input, output, session):
+async def server(input, output, session):
     @output
     @render.plot
     def histogram():
         url = 'https://api.gbif.org/v1/dataset/cd6e21c8-9e8a-493a-8a76-fbf7862069e5'
-        response = pyodide.http.pyfetch(url)
+        response = await pyodide.http.pyfetch(url)
         if response.status != 200:
             raise Exception(f"Error fetching {url()}: {response.status}")
-        data = response.json()        
+        data = await response.json()        
         title = data['title']
         x = 100 + np.random.randn(500)
         plt.title(title, size=20)
