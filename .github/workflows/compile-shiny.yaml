@@ -13,6 +13,9 @@ jobs:
     - name: Install shinylive
       run: pip install shinylive
 
+    - name: Clear existing compiled app
+      run: rm -rf docs
+      
     - name: Build static version of shiny app
       run: shinylive export src_shiny_app docs
 
