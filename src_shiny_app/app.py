@@ -28,7 +28,7 @@ def server(input, output, session):
         x = 100 + np.random.randn(500)
         fig, ax = plt.subplots()
         ax.hist(x=x, bins=input.slider(), color="grey", ec="black")
-        ax.set_title(title)
+        ax.set_title('Dataset: ' + title)
         return fig
 
 app = App(ui=app_ui, server=server)
