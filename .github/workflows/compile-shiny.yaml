@@ -1,6 +1,6 @@
 name: Compile Shiny app to static site under docs/
 on:
-  # push
+  push:
   workflow_dispatch:
   
 jobs:
