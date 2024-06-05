@@ -16,10 +16,10 @@ app_ui = ui.page_fluid(
     )
 )
 
-async def server(input, output, session):
+def server(input, output, session):
     @output
     @render.plot
-    def histogram():
+    async def histogram():
         url = 'https://api.gbif.org/v1/dataset/cd6e21c8-9e8a-493a-8a76-fbf7862069e5'
         response = await pyodide.http.pyfetch(url)
         if response.status != 200:
