@@ -1,0 +1,24 @@
+name: Compile Shiny app to static site under docs/
+on:
+  push
+  
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install shinylive
+      run: pip install shinylive
+
+    - name: Build static version of shiny app
+      run: shinylive export src_shiny_app docs
+
+    - name: Commit changes
+      run: |
+          git config --global user.name 'nickynicolson'
+          git config --global user.email 'n.nicolson@kew.org'
+          git commit -am "shinylive compilation"
+          git push    
